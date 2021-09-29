@@ -17,11 +17,6 @@ async function main(){
     await mongoose.connect(process.env.DB_HOST);
 }
 
-const Test = require('./models/Test');
-
-const shit = new Test({ name: 'Shit' });
-console.log(shit.name);
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
