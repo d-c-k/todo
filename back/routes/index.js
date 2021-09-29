@@ -9,4 +9,12 @@ router.get('/', async(req, res, next) => {
     res.json(tests);
 });
 
+router.post('/', async(req, res, next) => {
+    const { name } = req.body;
+    const newTest = new Test({ name })
+
+    newTest.save();
+    res.end();
+})
+
 module.exports = router;
