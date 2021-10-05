@@ -13,6 +13,7 @@ export default function HomePage() {
     })
     .then(res => res.json())
     .then(data => setTodoItems(item => [...data]))
+    .catch(error => console.log(error))
   }, []);
 
   console.log(todoItems);
