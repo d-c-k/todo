@@ -1,9 +1,11 @@
 import React from 'react';
+import Test from './components/Test';
 
 function App() {
   return (
-    <div class="main">
+    <div className="main">
       <p>test</p>
+      <Test />
     </div>
   );
 }
