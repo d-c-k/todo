@@ -6,7 +6,8 @@ export default function HomePage() {
   const [todoItems, setTodoItems] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:1337/api/items', {
+    const url = 'http://localhost:1337/api/items';
+    fetch(url, {
       headers: {
         "Content-Type":"application/json"
       }
