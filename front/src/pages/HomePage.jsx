@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import Item from '../components/Item';
+
 export default function HomePage() {
   const [todoItems, setTodoItems] = useState(null);
 
@@ -17,6 +19,14 @@ export default function HomePage() {
   return (
     <>
       <p>Home</p>
+      {todoItems
+      ?
+      todoItems.map(item => {
+          return <Item key={item._id} todoItem={item} />
+      })
+      :
+      <p>No todo items</p>
+      }
     </>
   ) 
 };
