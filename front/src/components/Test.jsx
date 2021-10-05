@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Test() {
-  const [datas, setDatas] = useState(null);
+  const [datas, setDatas] = useState([]);
 
 //  useEffect(() => {
 //    fetch('http://localhost:1337', {
@@ -24,7 +24,7 @@ export default function Test() {
     .then(res => res.json())
     .then(data => {
       console.log(data);
-      setDatas(data);
+      setDatas(datas => [...data]);
     })
   }
 
@@ -33,7 +33,6 @@ export default function Test() {
     <>
     <button type="button" onClick={fetchData}>fetch</button>
       <ul>
-        <li>{datas}</li>
       </ul>
     </>
   ) 
