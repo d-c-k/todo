@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 export default function Test() {
-  const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState(null);
 
 //  useEffect(() => {
 //    fetch('http://localhost:1337', {
@@ -33,6 +33,14 @@ export default function Test() {
     <>
     <button type="button" onClick={fetchData}>fetch</button>
       <ul>
+        {datas
+        ?
+        datas.map(item => {
+            return <li key={item._id}>{item.name}</li>
+        })
+        :
+        <li>no data</li>
+        }
       </ul>
     </>
   ) 
