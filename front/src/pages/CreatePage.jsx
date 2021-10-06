@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function CreatePage() {
   const [formInput, setFormInput] = useState({});
@@ -19,8 +19,8 @@ export default function CreatePage() {
         "Content-Type":"application/json"
       }
     })
-    .then(res => res.json())
-    .then(data => history.push('/home'))
+    .catch(error => console.log(error))
+    history.push('/home');
   };
 
   return (
@@ -28,7 +28,7 @@ export default function CreatePage() {
       <p>Create new item</p>
       <form onSubmit={handleSubmit}>
         <input type="text" name="title" onChange={handleChange} />
-      <textarea name="body" value={formInput.body} onChange={handleChange} />
+        <textarea name="body" value={formInput.body} onChange={handleChange} />
         <input type="submit" value="Submit" />
       </form>
     </>
