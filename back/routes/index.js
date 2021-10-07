@@ -3,26 +3,33 @@ const router = express.Router();
 
 const Item = require('../models/Item');
 
-//-----Test section----
-const Test = require('../models/Test');
-
-router.get('/', async(req, res, next) => {
-    const tests = await Test.find();
-    res.json(tests);
-});
-
-router.post('/', async(req, res, next) => {
-    const { name } = req.body;
-    const newTest = new Test({ name })
-
-    newTest.save();
-    res.end();
-})
-//-----End of test section----
-
 router.get('/api/items', async(req, res, next) => {
   const items = await Item.find();
-  res.json(items);
+  if(!items){
+    res.statusCode = 404;
+    res.statusMessage = 'Not found';
+    res.end('404 - Not found');
+  }else{
+    res.json(items);
+  }
+})
+
+router.get('/api/items/:id', async(req, res, next) => {
+  const id = req.params.id;
+  if(!id){
+    res.statusCode = 500;
+    res.statusMessage = 'Invalid ID';
+    res.end('500 - Invalid ID')
+  }else{
+    const item = await Item.findOne({_id:id});
+    if(!item){
+      res.statusCode = 404;
+      res.statusMessage = 'Not found';
+      res.end('404 - Not found');
+    }else{
+      res.json(item);
+    }
+  }
 })
 
 router.post('/api/items', async(req, res, next) => {
