@@ -25,10 +25,13 @@ router.post('/api/items', (req, res, next) => {
    .catch(() => res.sendStatus(500));
 });
 
-//router.put('/api/items/:id', (req, res, next) => {
-//  const id = parseInt(req.params.id);
-//
-//  req.body.title && ()
-//})
+router.post('/api/items/:id', (req, res, next) => {
+  const id = req.params.id;
+  const { title, body } = req.body;
+
+  Item.findOneAndUpdate({_id:id}, { title, body })
+    .then(() => res.sendStatus(202))
+    .catch(() => res.sendStatus(400));
+})
 
 module.exports = router;
