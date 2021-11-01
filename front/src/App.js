@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import CreatePage from './pages/CreatePage';
-import EditPage from './pages/EditPage';
-import HomePage from './pages/HomePage';
+import { CreatePage } from './pages/CreatePage';
+import { EditPage } from './pages/EditPage';
+import { HomePage } from './pages/HomePage';
 
 function App() {
   return (

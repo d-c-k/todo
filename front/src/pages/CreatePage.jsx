@@ -1,25 +1,19 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-export default function CreatePage() {
+import { createItem } from '../requests/axiosRequests';
+
+export const CreatePage = () => {
   const [formInput, setFormInput] = useState({});
   const history = useHistory();
 
-  function handleChange(e){
+  const handleChange = (e) => {
     setFormInput({...formInput, [e.target.name]: e.target.value});
   };
 
-  function handleSubmit(e){
-    e.preventDefault()
-    const url = 'http://localhost:1337/api/items';
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(formInput),
-      headers: {
-        "Content-Type":"application/json"
-      }
-    })
-    .catch(error => console.log(error))
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createItem(formInput);
     history.push('/home');
   };
 

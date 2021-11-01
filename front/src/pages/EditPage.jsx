@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function EditPage() {
+export const EditPage = () => {
   return (
     <>
       <p>EDIT</p>

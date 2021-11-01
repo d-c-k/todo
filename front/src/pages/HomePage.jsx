@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
+import { getAllItems } from '../requests/axiosRequests';
+
 import Item from '../components/Item';
 
-export default function HomePage() {
+export const HomePage = () => {
   const [todoItems, setTodoItems] = useState(null);
+  const [errorMsg, setErrorMsg] = useState('No items found');
 
   useEffect(() => {
-    const url = 'http://localhost:1337/api/items';
-    fetch(url, {
-      headers: {
-        "Content-Type":"application/json"
-      }
-    })
-    .then(res => res.json())
-    .then(data => setTodoItems(item => [...data]))
-    .catch(error => console.log(error))
+    getAllItems()
+      .then(res => setTodoItems(item => [...res.data]))
+      .catch(error => setErrorMsg(JSON.parse(error)));
   }, []);
 
   console.log(todoItems);
@@ -27,7 +24,7 @@ export default function HomePage() {
           return <Item key={item._id} todoItem={item} />
       })
       :
-      <p>No todo items</p>
+      <p>{errorMsg}</p>
       }
     </>
   ) 
