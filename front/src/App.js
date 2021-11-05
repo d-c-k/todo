@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { LoginPage } from './pages/LoginPage';
 import { CreatePage } from './pages/CreatePage';
 import { EditPage } from './pages/EditPage';
 import { HomePage } from './pages/HomePage';
@@ -18,6 +19,10 @@ function App() {
       
       <Route path='/edit/:id'>
         <EditPage />
+      </Route>
+
+      <Route path='/'>
+        <LoginPage />
       </Route>
     </Switch>
   );
