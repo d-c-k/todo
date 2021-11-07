@@ -50,6 +50,9 @@ const StyledEditInput = styled.input`
 
 const StyledEditTextArea = styled.textarea`
   color: red;
+  width: 100%;
+  height: 3rem;
+  resize: none;
 `;
 
 const StyledEditSubmit = styled.input`
@@ -63,6 +66,10 @@ const StyledEditSubmit = styled.input`
   }
 `;
 
+const StyledErrorMessage = styled.p`
+  color: red;
+`;
+
 export {
   StyledItemCard,
   StyledTitle,
@@ -71,5 +78,6 @@ export {
   StyledEditForm,
   StyledEditInput,
   StyledEditTextArea,
-  StyledEditSubmit
+  StyledEditSubmit,
+  StyledErrorMessage
 };

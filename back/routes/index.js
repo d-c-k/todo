@@ -20,18 +20,30 @@ router.post('/api/items', (req, res, next) => {
   const { title, body } = req.body;
   const newItem = new Item({ title, body });
 
-  newItem.save()
-   .then(() => res.sendStatus(201))
-   .catch(() => res.sendStatus(500));
+  if(!title){
+    res.status(400).json({errorMessage: 'Todo-item requires a title'});
+  }else if(!body){
+    res.status(400).json({errorMessage: 'Todo-item requires a body'});
+  } else {
+    newItem.save()
+    .then(() => res.sendStatus(201))
+    .catch(() => res.sendStatus(500));
+  };
 });
 
 router.post('/api/items/:id', (req, res, next) => {
   const id = req.params.id;
   const { title, body } = req.body;
 
-  Item.findByIdAndUpdate(id, { title, body })
-    .then(() => res.sendStatus(202))
-    .catch(() => res.sendStatus(400));
+  if(!title){
+    res.status(400).json({errorMessage: 'Todo-item requires a title'});
+  }else if(!body){
+    res.status(400).json({errorMessage: 'Todo-item requires a body'});
+  } else {
+    Item.findByIdAndUpdate(id, { title, body })
+      .then(() => res.sendStatus(202))
+      .catch(() => res.sendStatus(400));
+  };
 });
 
 router.delete('/api/items/:id', (req, res, next) => {

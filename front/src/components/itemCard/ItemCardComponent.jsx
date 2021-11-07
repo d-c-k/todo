@@ -12,13 +12,15 @@ import {
   StyledEditForm,
   StyledEditInput,
   StyledEditTextArea,
-  StyledEditSubmit
+  StyledEditSubmit,
+  StyledErrorMessage
 } from './StyledItemCard';
 
 export const ItemCardComponent = ({todoItem}) => {
   const [expanded, setExpanded] = useState(false);  
   const [editable, setEditable] = useState(false);
-  const { todoItems, setTodoItems, setErrorMsg } = useContext(DataContext);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const { setTodoItems } = useContext(DataContext);
   const [buttonSymbol, setButtonSymbol] = useState("MORE");
   const [item, setItem] = useState({title:todoItem.title, body:todoItem.body});
 
@@ -29,6 +31,7 @@ export const ItemCardComponent = ({todoItem}) => {
     } else {
       setExpanded(false);
       setButtonSymbol("MORE");
+      setItem({title:todoItem.title, body:todoItem.body});
     };
     editable === true && setEditable(false);
   };
@@ -38,20 +41,23 @@ export const ItemCardComponent = ({todoItem}) => {
   };
 
   const handleOnChange = (e) => {
-    setItem({...item, [e.target.name]: e.target.value });
+    setItem({...item, [e.target.name]: e.target.value});
   };
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    editItem(todoItem._id, item);
-    setEditable(false);
+    editItem(todoItem._id, item)
+      .then(() => setEditable(false))
+      .catch((error) => setErrorMsg(error.response.data.errorMessage));
   };
 
   const handleDelete = (e) => {
-    deleteItem(todoItem._id);
-    getAllItems()
-      .then(res => setTodoItems(item => [...res.data]))
-      .catch(error => setErrorMsg(JSON.parse(error)));
+    deleteItem(todoItem._id)
+      .then(() => {
+        getAllItems()
+          .then((res) => setTodoItems(res.data));
+      })
+      .catch((error) => console.error(error)); 
   };
 
   if(editable === false){
@@ -62,6 +68,8 @@ export const ItemCardComponent = ({todoItem}) => {
         { expanded === true && 
           <>
             <p>{item.body}</p>
+            <p>Created: {todoItem.createdAt}</p>
+            {todoItem.updatedAt !== todoItem.createdAt && <p>Updated: {todoItem.updatedAt}</p>}
             <StyledButton onClick={handleEdit}>EDIT</StyledButton>
             <StyledButton onClick={handleDelete}>DELETE</StyledButton>
           </>
@@ -71,6 +79,7 @@ export const ItemCardComponent = ({todoItem}) => {
   } else {
     return (
       <StyledItemCard>
+        {errorMsg && <StyledErrorMessage>{errorMsg}</StyledErrorMessage>}
         <StyledEditForm onSubmit={handleEditSubmit}>
           <StyledEditInput type="text" name="title" value={item.title} onChange={handleOnChange}/>
           <StyledExpandButton onClick={handleOnClick}>{buttonSymbol}</StyledExpandButton>
