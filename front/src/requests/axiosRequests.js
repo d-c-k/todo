@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const url = axios.create({
-  baseURL: 'http://localhost:1337'
+  baseURL: 'https://git.heroku.com/daniels-todo.git'
 });
 
 export const getAllItems = () => url.get('/api/items');
