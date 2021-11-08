@@ -12,6 +12,7 @@ const StyledHeader = styled.header`
   p {
     color: white;
     margin-right: 1rem;
+    cursor: pointer;
   };
 `
 

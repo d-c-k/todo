@@ -9,10 +9,10 @@ import {
 } from './StyledHeader';  
 
 export const HeaderComponent = ({title}) => {
-  const { setCreateNewItem } = useContext(DataContext);
+  const { createNewItem, setCreateNewItem } = useContext(DataContext);
 
   const handleOnClick = (e) => {
-    setCreateNewItem(true);
+    createNewItem ? setCreateNewItem(false) : setCreateNewItem(true);
   };
 
   return (
@@ -20,8 +20,7 @@ export const HeaderComponent = ({title}) => {
       <Link to="/home">
         <p>Home</p>
       </Link>
-      <p onClick={handleOnClick}>New</p>
-    
+      {!title && <p onClick={handleOnClick}>New</p>}
       {title && <StyledTitle>{title}</StyledTitle>}
     </StyledHeader>
   ) 

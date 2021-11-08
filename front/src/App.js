@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { DataContext } from './contexts/DataContext';
+
 import { LoginPage } from './pages/LoginPage';
-import { CreatePage } from './pages/CreatePage';
-import { EditPage } from './pages/EditPage';
 import { HomePage } from './pages/HomePage';
 
 function App() {
-  return (
-    <Switch>
-      <Route path='/home'>
-        <HomePage />
-      </Route>
-      
-      <Route path='/new'>
-        <CreatePage />
-      </Route>
-      
-      <Route path='/edit/:id'>
-        <EditPage />
-      </Route>
+  const [todoItems, setTodoItems] = useState(null);
+  const [createNewItem, setCreateNewItem] = useState(false);
+  const DataContextValue = {
+    todoItems,
+    setTodoItems,
+    createNewItem,
+    setCreateNewItem
+  };
 
-      <Route path='/'>
-        <LoginPage />
-      </Route>
-    </Switch>
+  return (
+    <DataContext.Provider value={DataContextValue}>
+      <Switch>
+        <Route path='/home'>
+          <HomePage />
+        </Route>
+        
+        <Route path='/'>
+          <LoginPage />
+        </Route>
+      </Switch>
+    </DataContext.Provider>
   );
 }
 

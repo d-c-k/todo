@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import { DataContext } from '../contexts/DataContext';
 
@@ -11,9 +11,11 @@ import { ItemCardComponent } from '../components/itemCard/ItemCardComponent';
 import StyledMainContainer from '../components/layout/StyledMainContainer';
 
 export const HomePage = () => {
-  const [todoItems, setTodoItems] = useState(null);
-  const [createNewItem, setCreateNewItem] = useState(false);
-  const DataContextValue = { todoItems, setTodoItems, setCreateNewItem };
+  const {
+    todoItems,
+    setTodoItems,
+    createNewItem
+  } = useContext(DataContext);
 
   useEffect(() => {
     getAllItems()
@@ -23,20 +25,18 @@ export const HomePage = () => {
 
   return (
     <>
-      <DataContext.Provider value={DataContextValue}>
-        <HeaderComponent/>
-        <StyledMainContainer>
-          {createNewItem && <CreateNewComponent/>}
-          {todoItems
-          ?
-          todoItems.map(item => {
-              return <ItemCardComponent key={item._id} todoItem={item} />
-          })
-          :
-          <p>No items found</p>
-          }
-        </StyledMainContainer>
-      </DataContext.Provider>
+      <HeaderComponent/>
+      <StyledMainContainer>
+        {createNewItem && <CreateNewComponent/>}
+        {todoItems
+        ?
+        todoItems.map(item => {
+            return <ItemCardComponent key={item._id} todoItem={item} />
+        })
+        :
+        <p>No items found</p>
+        }
+      </StyledMainContainer>
     </>
   ) 
 };
