@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+
 const url = axios.create({
-  baseURL: 'https://git.heroku.com/daniels-todo.git'
+  baseURL: 'https://daniels-todo.herokuapp.com'
 });
 
 export const getAllItems = () => url.get('/api/items');
